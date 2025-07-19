@@ -79,7 +79,7 @@ def run_model(prompt,
                 safety_settings=safety_settings,
                 system_instruction=system_instruction,
                 response_mime_type=response_mime_type,
-                temperature=1),
+                temperature=0.3),
             contents=[prompt], 
                 )
 
