@@ -10,7 +10,10 @@
 Secalyze is an advanced AI-driven security tool designed to empower penetration testers, red team specialists, and cybersecurity engineers. While its primary focus is JavaScript vulnerability scanning, Secalyze offers versatile capabilities for a wide range of security tasks including secrets detection, endpoint discovery, cloud bucket analysis, and custom security automation.
 
 ---
-
+<div align="center">
+ <img src="assets/SecAlyzeDemo.gif" alt="Secalyze demo">
+</div>
+  
 ### Leveraging Google Gemini AI models, Secalyze delivers:
 - **Deep JavaScript Analysis**: Detect XSS, code injection, hardcoded secrets, and sensitive data exposure in JS code
 - **Multi-Purpose Security Engine**: Perform custom security assessments using YAML templates
