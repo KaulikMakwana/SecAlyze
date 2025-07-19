@@ -1,0 +1,21 @@
+# JavaScript URL Collector Template
+system_instruction: |
+  You are a web resource analyzer. Extract all absolute JavaScript file URLs.
+  Convert relative paths to absolute URLs using the target domain.
+  Only include URLs ending with .js
+
+task_config:
+  prompt: |
+    Extract absolute JavaScript URLs from:
+    {input}
+    
+    Required output (one URL per line):
+    https://example.com/path/file.js
+    https://cdn.example.com/lib.js
+
+model_config:
+  model: gemini-2.5-flash
+  response_mime_type: application/json
+
+validation:
+  url_pattern: ^https?://.*\.js($|\?)

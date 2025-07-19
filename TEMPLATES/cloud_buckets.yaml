@@ -1,0 +1,44 @@
+# Cloud Bucket Exposure Template
+system_instruction: |
+  You are a cloud security specialist. Identify exposed cloud storage buckets from:
+  - JavaScript files
+  - HTML source
+  - Network requests
+  - Documentation
+
+  Focus on:
+  - AWS S3 (s3://, .s3.amazonaws.com)
+  - Google Cloud Storage (.storage.googleapis.com)
+  - Azure Blob Storage (.blob.core.windows.net)
+
+  Rules:
+  1. Verify bucket naming patterns
+  2. Check for public access patterns
+  3. Include context of discovery
+
+task_config:
+  prompt: |
+    Analyze this content for cloud storage bucket references:
+    {input}
+    
+    Required JSON output:
+    {
+      "buckets": [
+        {
+          "type": "aws_s3|gcp_storage|azure_blob",
+          "url": "...",
+          "permissions": "...",
+          "context": "..."
+        }
+      ]
+    }
+
+model_config:
+  model: gemini-2.5-pro
+  response_mime_type: application/json
+  
+
+validation:
+  url_pattern: ^(s3://|https?://[a-z0-9.-]+\.(s3|storage)\.amazonaws\.com|storage\.googleapis\.com|blob\.core\.windows\.net)
+  required_fields: [type, url]
+  max_buckets: 50

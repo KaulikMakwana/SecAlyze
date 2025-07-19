@@ -1,0 +1,42 @@
+# API Key Finder Template
+system_instruction: |
+  You are a security AI specialized in credential detection. Analyze the input for:
+  - API keys (32+ chars alphanumeric)
+  - Authentication tokens
+  - Cryptographic secrets
+  - Hardcoded credentials
+
+  Rules:
+  1. Verify patterns match known credential formats
+  2. Never return false positives
+  3. Include context around findings
+
+task_config:
+  prompt: |
+    Analyze this content for exposed API keys and secrets:
+    {input}
+    
+    If response_mime_type is 'application/json', output:
+    [
+      {
+        "api_key": "<key>",
+        "type": "<service>",
+        "location": "<file/line>",
+        "risk": "high|medium|low"
+      }
+    ]
+
+    If response_mime_type is 'text/markdown' or 'text/plain', output:
+    ### API Key: [key]
+    - **Type**: [service]
+    - **Location**: [file/line]
+    - **Risk**: [high|medium|low]
+
+model_config:
+  model: gemini-2.5-flash
+  response_mime_type: application/json
+
+validation:
+  min_findings: 0
+  max_findings: 100
+  required_fields: [type, value]

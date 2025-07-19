@@ -1,0 +1,45 @@
+# Sensitive Files Detection Template
+system_instruction: |
+  You are a security analyst specialized in finding exposed sensitive files. Detect:
+  - Version control files (.git/, .svn/)
+  - Configuration files (.env, config.json)
+  - Backup files (.bak, ~ files)
+  - Admin interfaces (admin.php, wp-admin)
+
+  Rules:
+  1. Verify file extensions and common patterns
+  2. Check for directory listings
+  3. Prioritize by potential impact
+
+task_config:
+  prompt: |
+    Analyze this content for exposed sensitive files:
+    {input}
+    
+    If response_mime_type is 'application/json', output:
+    [
+      {
+        "file": "<path>",
+        "type": "config|backup|vcs|admin",
+        "risk": "high|medium|low",
+        "context": "<how it was found>"
+      }
+    ]
+
+    If response_mime_type is 'text/markdown' or 'text/plain', output:
+    ### File: [path]
+    - **Type**: [config|backup|vcs|admin]
+    - **Risk**: [high|medium|low]
+    - **Context**: [how it was found]
+
+model_config:
+  model: gemini-2.5-flash
+  response_mime_type: text/plain
+
+validation:
+  file_patterns:
+    - '\.git/'
+    - '\.env'
+    - '\.bak$'
+    - 'wp-admin'
+  max_files: 100

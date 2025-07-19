@@ -1,0 +1,40 @@
+# Endpoint Discovery Template
+system_instruction: |
+  You are a web security scanner. Identify all API endpoints from:
+  - JavaScript files
+  - HTML forms
+  - Network traffic
+  - Documentation
+
+  Rules:
+  1. Include full URL paths
+  2. Note HTTP methods
+  3. Identify parameters
+
+task_config:
+  prompt: |
+    Extract API endpoints from:
+    {input}
+
+    If response_mime_type is 'application/json', output:
+    [
+      {
+        "url": "<endpoint URL>",
+        "method": "GET|POST|...",
+        "parameters": ["param1", "param2", ...],
+        "source": "<file/location>"
+      }
+    ]
+
+    If response_mime_type is 'text/markdown' or 'text/plain', output:
+    ## Endpoint: [URL]
+    - Method: [GET|POST|etc]
+    - Parameters: [list]
+    - Source: [file/location]
+
+model_config:
+  model: gemini-2.5-flash
+  response_mime_type: application/json
+
+validation:
+  url_pattern: ^https?://
